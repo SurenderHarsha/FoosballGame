@@ -43,6 +43,7 @@ const TEAM_ROLES_4P = {
 const BALL_RADIUS = 12;
 const MAN_WIDTH = 22;
 const MAN_HEIGHT = 66;
+const MAN_HEIGHT_MID = 38; // Smaller midfielders — ball passes through easily
 const MAN_KICK_REACH = 55;
 const ROD_SLIDE_RANGE = 110;
 const ROD_SLIDE_RANGE_DEF = 180;
@@ -64,9 +65,9 @@ const SPIN_DECAY = 0.985;
 const SPIN_MAGNUS = 0.02;
 const SPIN_WALL_REVERSAL = 0.4;
 
-// Ball must be within this distance of rod X to activate special moves
-// MAN_WIDTH/2 + BALL_RADIUS + small margin = ~35px (ball touching the rod)
-const SPECIAL_MOVE_BALL_RANGE = 40;
+// Ball must be literally touching the rod to activate special moves
+// MAN_WIDTH/2 + BALL_RADIUS = 11 + 12 = 23px
+const SPECIAL_MOVE_BALL_RANGE = 25;
 
 // Special move definitions per role
 const SPECIAL_MOVES = {
@@ -123,6 +124,10 @@ const SPECIAL_MOVES = {
 
 function getSlideRange(rod) {
   return rod.role === 'DEF' ? ROD_SLIDE_RANGE_DEF : ROD_SLIDE_RANGE;
+}
+
+function getManHeight(rod) {
+  return rod.role === 'MID' ? MAN_HEIGHT_MID : MAN_HEIGHT;
 }
 
 function createInitialState() {
@@ -188,7 +193,7 @@ function isBallAtExtremity(ball, rod) {
   const menY = rod.men.map(m => m.y + rod.offsetY);
   const topMan = Math.min(...menY);
   const botMan = Math.max(...menY);
-  const marginFromEdge = MAN_HEIGHT * 0.8;
+  const marginFromEdge = getManHeight(rod) * 0.8;
   return ball.y < topMan + marginFromEdge || ball.y > botMan - marginFromEdge;
 }
 
@@ -210,7 +215,7 @@ function updateSpecialMove(state) {
   switch (sm.type) {
     case 'spaghetti': {
       const { dist } = closestManToBall(ball, rod);
-      const accuracy = Math.max(0, 1 - dist / (MAN_HEIGHT * 0.6));
+      const accuracy = Math.max(0, 1 - dist / (getManHeight(rod) * 0.6));
       const dir = rod.owner === 1 ? 1 : -1;
       ball.vx = dir * BALL_MAX_SPEED;
       ball.vy = (1 - accuracy) * (Math.random() - 0.5) * 8;
@@ -322,7 +327,7 @@ function updateSpecialMove(state) {
           const manY = rod.men[m].y + rod.offsetY;
           const dx = Math.abs(ball.x - rod.x);
           const dy = Math.abs(ball.y - manY);
-          if (dx < MAN_WIDTH + BALL_RADIUS && dy < MAN_HEIGHT / 2 + BALL_RADIUS) {
+          if (dx < MAN_WIDTH + BALL_RADIUS && dy < getManHeight(rod) / 2 + BALL_RADIUS) {
             // Slam ball toward nearest wall
             const wallDir = ball.y < TABLE.height / 2 ? -1 : 1;
             ball.vy = wallDir * BALL_MAX_SPEED * 0.8;
@@ -470,7 +475,7 @@ function getManRect(rod, manIndex) {
   const man = rod.men[manIndex];
   const baseY = man.y + rod.offsetY;
   const halfW = MAN_WIDTH / 2;
-  const halfH = MAN_HEIGHT / 2;
+  const halfH = getManHeight(rod) / 2;
   const absAngle = Math.abs(rod.angle);
   // Fake kicks don't extend reach
   const reach = rod.fakeKick ? 0 : (absAngle / (Math.PI * 0.6)) * MAN_KICK_REACH;
@@ -862,7 +867,7 @@ io.on('connection', (socket) => {
           const men = rod.men.map((m, i) => ({ y: m.y + rod.offsetY, i }));
           men.sort((a, b) => a.y - b.y);
           for (let i = 0; i < men.length - 1; i++) {
-            if (ball.y >= men[i].y - MAN_HEIGHT / 2 && ball.y <= men[i + 1].y + MAN_HEIGHT / 2) {
+            if (ball.y >= men[i].y - getManHeight(rod) / 2 && ball.y <= men[i + 1].y + getManHeight(rod) / 2) {
               isDouble = true;
               man1Sorted = i;
               man2Sorted = i + 1;

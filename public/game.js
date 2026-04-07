@@ -331,7 +331,7 @@ function updateMovesPanel() {
     const rod = gameState.rods[rodIdx];
     if (rod) {
       selectedRole = rod.role;
-      if (Math.abs(ball.x - rod.x) < 40) selectedRodNearBall = true;
+      if (Math.abs(ball.x - rod.x) < 25) selectedRodNearBall = true;
     }
   }
 
@@ -497,7 +497,9 @@ function drawRods() {
       ctx.fillText(`[${kl}] ${rod.name}`, rod.x, TABLE.wallThickness - 4);
     }
 
-    const mW = 22, mH = 66;
+    const mW = 22;
+    const mH = rod.role === 'MID' ? 38 : 66; // Midfielders are smaller
+    const headR = rod.role === 'MID' ? 5 : 7; // Smaller head for mid
     for (let m = 0; m < rod.menCount; m++) {
       const y = rod.men[m].y + rod.offsetY;
       const bc = rod.owner === 1 ? C.p1Man : C.p2Man;
@@ -517,13 +519,13 @@ function drawRods() {
       ctx.strokeRect(-mW / 2, -mH / 2, mW, mH);
 
       ctx.fillStyle = '#ffcc80'; ctx.beginPath();
-      ctx.arc(0, -mH / 2 + 10, 7, 0, Math.PI * 2); ctx.fill();
+      ctx.arc(0, -mH / 2 + headR + 2, headR, 0, Math.PI * 2); ctx.fill();
 
-      const ka = rod.angle || 0, ke = Math.abs(Math.sin(ka)) * 20;
+      const ka = rod.angle || 0, ke = Math.abs(Math.sin(ka)) * (rod.role === 'MID' ? 14 : 20);
       const fd = ka >= 0 ? 1 : -1;
       if (ke > 1) {
         ctx.fillStyle = '#333';
-        ctx.fillRect(fd > 0 ? mW / 2 : -mW / 2 - ke, mH / 2 - 10, ke, 8);
+        ctx.fillRect(fd > 0 ? mW / 2 : -mW / 2 - ke, mH / 2 - 8, ke, 6);
       }
       ctx.restore();
     }
@@ -748,7 +750,7 @@ function trySpecialMove(key) {
       if (rodIdx === undefined) continue;
       const rod = gameState.rods[rodIdx];
       if (!rod) continue;
-      if (Math.abs(gameState.ball.x - rod.x) > 40) continue;
+      if (Math.abs(gameState.ball.x - rod.x) > 25) continue;
       spinCharge = 0;
       socket.emit('specialMove', { rodIndex: rodIdx, moveId: 'spinneroni' });
       return;
@@ -768,7 +770,7 @@ function trySpecialMove(key) {
     if (!move) continue;
 
     // Check ball proximity
-    if (Math.abs(gameState.ball.x - rod.x) > 40) continue;
+    if (Math.abs(gameState.ball.x - rod.x) > 25) continue;
 
     // Selfie: double-tap F within 500ms (on GK)
     if (move.id === 'selfie') {
