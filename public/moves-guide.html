@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foosball Online — Special Moves Guide</title>
+  <style>
+    @media print {
+      body { background: #fff !important; }
+      .page-break { page-break-before: always; }
+      .no-print { display: none; }
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f0f1a;
+      color: #e0e0e0;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 30px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.4rem;
+      color: #e94560;
+      margin-bottom: 6px;
+    }
+    .doc-subtitle {
+      text-align: center;
+      color: #888;
+      font-size: 1rem;
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      color: #4fc3f7;
+      border-bottom: 2px solid #0f3460;
+      padding-bottom: 8px;
+      margin: 40px 0 20px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .move-card {
+      background: #16213e;
+      border: 1px solid #0f3460;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .move-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      flex-shrink: 0;
+    }
+
+    .move-body { flex: 1; }
+
+    .move-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .move-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .move-key-badge {
+      background: #0f3460;
+      border: 1px solid #1a4a8a;
+      border-radius: 5px;
+      padding: 2px 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #ffd54f;
+      font-family: monospace;
+    }
+
+    .move-role-badge {
+      background: rgba(233,69,96,0.2);
+      border: 1px solid rgba(233,69,96,0.4);
+      border-radius: 5px;
+      padding: 2px 8px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #e94560;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .move-description {
+      color: #bbb;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+    }
+
+    .move-how {
+      background: rgba(79,195,247,0.08);
+      border-left: 3px solid #4fc3f7;
+      padding: 10px 14px;
+      border-radius: 0 6px 6px 0;
+      margin-bottom: 10px;
+    }
+    .move-how-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #4fc3f7;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .move-how-text {
+      color: #ccc;
+      font-size: 0.88rem;
+    }
+
+    .move-skill {
+      background: rgba(255,213,79,0.08);
+      border-left: 3px solid #ffd54f;
+      padding: 10px 14px;
+      border-radius: 0 6px 6px 0;
+    }
+    .move-skill-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #ffd54f;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .move-skill-text {
+      color: #ccc;
+      font-size: 0.88rem;
+    }
+
+    .difficulty {
+      display: inline-flex;
+      gap: 3px;
+      margin-left: 8px;
+    }
+    .diff-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #333;
+      border: 1px solid #555;
+    }
+    .diff-dot.filled { background: #ffd54f; border-color: #ffd54f; }
+    .diff-dot.filled.hard { background: #e94560; border-color: #e94560; }
+
+    .controls-summary {
+      background: #16213e;
+      border: 1px solid #0f3460;
+      border-radius: 12px;
+      padding: 24px;
+      margin: 30px 0;
+    }
+    .controls-summary h3 {
+      color: #e94560;
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+    }
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .ctrl-item {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding: 6px 0;
+    }
+    .ctrl-key {
+      background: #0f3460;
+      border: 1px solid #1a4a8a;
+      border-radius: 4px;
+      padding: 3px 8px;
+      font-family: monospace;
+      font-weight: 700;
+      color: #ffd54f;
+      min-width: 45px;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+    .ctrl-desc {
+      color: #aaa;
+      font-size: 0.85rem;
+    }
+
+    .spin-section {
+      background: linear-gradient(135deg, rgba(156,39,176,0.15), rgba(233,69,96,0.1));
+      border: 1px solid rgba(156,39,176,0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .spin-title {
+      color: #ce93d8;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .spin-text {
+      color: #bbb;
+      font-size: 0.9rem;
+    }
+
+    .diagram {
+      display: flex;
+      justify-content: center;
+      margin: 16px 0;
+    }
+    .diagram canvas {
+      border: 1px solid #0f3460;
+      border-radius: 8px;
+      background: #2e7d32;
+    }
+
+    .footer {
+      text-align: center;
+      color: #555;
+      font-size: 0.8rem;
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid #0f3460;
+    }
+
+    .print-btn {
+      display: block;
+      margin: 0 auto 30px;
+      padding: 12px 30px;
+      background: #e94560;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .print-btn:hover { background: #c73652; }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      color: #4fc3f7;
+      margin-bottom: 20px;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <a href="/" class="back-link no-print">&larr; Back to Game</a>
+  <button class="print-btn no-print" onclick="window.print()">Save as PDF (Print)</button>
+
+  <h1>&#9917; Foosball Online</h1>
+  <p class="doc-subtitle">Special Moves Guide &amp; Controls Reference</p>
+
+  <!-- Controls Summary -->
+  <div class="controls-summary">
+    <h3>Controls Overview</h3>
+    <div class="controls-grid">
+      <div class="ctrl-item"><span class="ctrl-key">Mouse</span><span class="ctrl-desc">Move selected rod up/down</span></div>
+      <div class="ctrl-item"><span class="ctrl-key">L-Click</span><span class="ctrl-desc">Forward kick</span></div>
+      <div class="ctrl-item"><span class="ctrl-key">R-Click</span><span class="ctrl-desc">Back kick</span></div>
+      <div class="ctrl-item"><span class="ctrl-key">Q W E R</span><span class="ctrl-desc">Select rod (GK/DEF/MID/ATK)</span></div>
+      <div class="ctrl-item"><span class="ctrl-key">F G H J</span><span class="ctrl-desc">Role-specific special moves</span></div>
+      <div class="ctrl-item"><span class="ctrl-key">V</span><span class="ctrl-desc">Spinneroni (all rods)</span></div>
+      <div class="ctrl-item"><span class="ctrl-key">B</span><span class="ctrl-desc">Fake Shot (all rods)</span></div>
+      <div class="ctrl-item"><span class="ctrl-key">B B</span><span class="ctrl-desc">Dribble Shot (double-tap)</span></div>
+      <div class="ctrl-item"><span class="ctrl-key">T</span><span class="ctrl-desc">Request table shake</span></div>
+      <div class="ctrl-item"><span class="ctrl-key">Esc</span><span class="ctrl-desc">Release mouse lock</span></div>
+    </div>
+  </div>
+
+  <!-- Spin Physics -->
+  <div class="spin-section">
+    <div class="spin-title">&#127744; Ball Spin Physics</div>
+    <div class="spin-text">
+      The ball has a spin property that affects its trajectory via the <strong>Magnus effect</strong>.
+      When the ball spins, it curves perpendicular to its direction of travel.
+      Spin is applied by the <strong>Spinneroni</strong> move and slightly by normal kicks if the rod is moving.
+      Spin decays over time and partially reverses on wall bounces.
+      A spinning ball shows a rotating cross pattern with a purple tint — the faster the spin, the more visible the indicator.
+    </div>
+  </div>
+
+  <!-- GOALKEEPER MOVES -->
+  <h2 class="section-title">Goalkeeper (GK)</h2>
+
+  <div class="move-card">
+    <div class="move-icon" style="background: rgba(233,69,96,0.15);">&#128248;</div>
+    <div class="move-body">
+      <div class="move-header">
+        <span class="move-title">Selfie Shot</span>
+        <span class="move-key-badge">F F</span>
+        <span class="move-role-badge">GK</span>
+        <span class="difficulty">
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot"></span>
+          <span class="diff-dot"></span>
+          <span class="diff-dot"></span>
+          <span class="diff-dot"></span>
+        </span>
+      </div>
+      <p class="move-description">Score on yourself. A self-goal for laughs, trolling, or honoring a gentleman's agreement.</p>
+      <div class="move-how">
+        <div class="move-how-label">How to Execute</div>
+        <div class="move-how-text">Select GK rod (Q). With the ball near your goalkeeper, double-tap <strong>F</strong> within 500ms to confirm. The ball fires into your own goal.</div>
+      </div>
+      <div class="move-skill">
+        <div class="move-skill-label">Skill Required</div>
+        <div class="move-skill-text">Courage (or a sense of humor). No mechanical skill needed — just the will to do it.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEFENDER MOVES -->
+  <h2 class="section-title">Defender (DEF)</h2>
+
+  <div class="move-card">
+    <div class="move-icon" style="background: rgba(76,175,80,0.15);">&#127837;</div>
+    <div class="move-body">
+      <div class="move-header">
+        <span class="move-title">Spaghetti Shot</span>
+        <span class="move-key-badge">F</span>
+        <span class="move-role-badge">DEF</span>
+        <span class="difficulty">
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot"></span>
+          <span class="diff-dot"></span>
+        </span>
+      </div>
+      <p class="move-description">Maximum power straight shot from defense toward the enemy goal. The ball fires like a rocket.</p>
+      <div class="move-how">
+        <div class="move-how-label">How to Execute</div>
+        <div class="move-how-text">Select DEF rod (W). Position the ball centered on one of your defenders. Press <strong>F</strong>. The shot fires straight at max speed.</div>
+      </div>
+      <div class="move-skill">
+        <div class="move-skill-label">Skill Required</div>
+        <div class="move-skill-text"><strong>Ball centering.</strong> Accuracy depends on how perfectly the ball is aligned with your player's center. Off-center = random deviation. Perfect center = laser-straight shot.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="move-card">
+    <div class="move-icon" style="background: rgba(244,67,54,0.15);">&#127829;</div>
+    <div class="move-body">
+      <div class="move-header">
+        <span class="move-title">Pepperoni</span>
+        <span class="move-key-badge">G</span>
+        <span class="move-role-badge">DEF</span>
+        <span class="difficulty">
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot"></span>
+          <span class="diff-dot"></span>
+          <span class="diff-dot"></span>
+          <span class="diff-dot"></span>
+        </span>
+      </div>
+      <p class="move-description">Random wall-bounce lucky shot. The ball fires at a random angle, bounces off a wall, and may find its way to the goal.</p>
+      <div class="move-how">
+        <div class="move-how-label">How to Execute</div>
+        <div class="move-how-text">Select DEF rod (W). Ball near your defender. Press <strong>G</strong>. The ball fires at a random wall angle with high power.</div>
+      </div>
+      <div class="move-skill">
+        <div class="move-skill-label">Skill Required</div>
+        <div class="move-skill-text"><strong>None — it's a gamble!</strong> The angle is randomized. Sometimes genius, sometimes terrible. Use when you're feeling lucky.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="move-card">
+    <div class="move-icon" style="background: rgba(255,152,0,0.15);">&#129364;</div>
+    <div class="move-body">
+      <div class="move-header">
+        <span class="move-title">Cornetto / Double Cornetto</span>
+        <span class="move-key-badge">H</span>
+        <span class="move-role-badge">DEF</span>
+        <span class="difficulty">
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot"></span>
+        </span>
+      </div>
+      <p class="move-description"><strong>Cornetto:</strong> Ball sticks to your player. Move the rod to control it, then click to fire a max-power straight shot.<br>
+      <strong>Double Cornetto:</strong> When the ball is between two defenders, it auto-dribbles between them first, then you click to shoot.</p>
+      <div class="move-how">
+        <div class="move-how-label">How to Execute</div>
+        <div class="move-how-text">Select DEF rod (W). Press <strong>H</strong> with ball near defender. The ball sticks to the nearest man (or dribbles between two). Move the rod to position, then <strong>click</strong> to fire. Best timing window is around 1 second into the stick phase.</div>
+      </div>
+      <div class="move-skill">
+        <div class="move-skill-label">Skill Required</div>
+        <div class="move-skill-text"><strong>Rod control + timing.</strong> Keep smooth, controlled movements while the ball is stuck. Click at the optimal timing window for maximum shot accuracy. Too early or too late = reduced accuracy.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="move-card">
+    <div class="move-icon" style="background: rgba(33,150,243,0.15);">&#129680;</div>
+    <div class="move-body">
+      <div class="move-header">
+        <span class="move-title">Yoyo Shot</span>
+        <span class="move-key-badge">J</span>
+        <span class="move-role-badge">DEF</span>
+        <span class="difficulty">
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot"></span>
+          <span class="diff-dot"></span>
+          <span class="diff-dot"></span>
+        </span>
+      </div>
+      <p class="move-description">Fires the ball at the wall beside the enemy goal. The ball bounces off the back wall and returns to your defender area — like a yoyo.</p>
+      <div class="move-how">
+        <div class="move-how-label">How to Execute</div>
+        <div class="move-how-text">Select DEF rod (W). Ball near defender. Press <strong>J</strong>. The ball fires toward the enemy back wall, aiming beside the goal. It bounces and returns to your side.</div>
+      </div>
+      <div class="move-skill">
+        <div class="move-skill-label">Skill Required</div>
+        <div class="move-skill-text"><strong>Positional awareness.</strong> The ball automatically aims beside the goal to avoid scoring. Use it as a playful reset or to confuse opponents. Follow up with another shot when it returns.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- MIDFIELD MOVES -->
+  <h2 class="section-title">Midfield (MID)</h2>
+
+  <div class="move-card">
+    <div class="move-icon" style="background: rgba(0,150,136,0.15);">&#128032;</div>
+    <div class="move-body">
+      <div class="move-header">
+        <span class="move-title">Dory Shot</span>
+        <span class="move-key-badge">F</span>
+        <span class="move-role-badge">MID</span>
+        <span class="difficulty">
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot"></span>
+        </span>
+      </div>
+      <p class="move-description">Powerful straight shot from midfield. Accuracy is inversely proportional to your mouse movement — the stiller you are, the straighter it goes.</p>
+      <div class="move-how">
+        <div class="move-how-label">How to Execute</div>
+        <div class="move-how-text">Select MID rod (E). Ball near midfield. <strong>Stop moving your mouse completely</strong>, then press <strong>F</strong>. The shot fires at max power.</div>
+      </div>
+      <div class="move-skill">
+        <div class="move-skill-label">Skill Required</div>
+        <div class="move-skill-text"><strong>Mouse stillness.</strong> Any mouse movement at the moment of pressing F reduces accuracy. Master players can position the ball, freeze, and fire with perfect precision. It's a test of composure under pressure.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="move-card">
+    <div class="move-icon" style="background: rgba(233,30,99,0.15);">&#127786;</div>
+    <div class="move-body">
+      <div class="move-header">
+        <span class="move-title">The Eliza</span>
+        <span class="move-key-badge">G</span>
+        <span class="move-role-badge">MID</span>
+        <span class="difficulty">
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot"></span>
+          <span class="diff-dot"></span>
+          <span class="diff-dot"></span>
+          <span class="diff-dot"></span>
+        </span>
+      </div>
+      <p class="move-description">Rapidly slides the rod sideways. The ball slams into the wall at maximum speed and bounces in a random direction. Pure chaos.</p>
+      <div class="move-how">
+        <div class="move-how-label">How to Execute</div>
+        <div class="move-how-text">Select MID rod (E). Ball near midfield. Press <strong>G</strong>. The rod oscillates rapidly for a brief moment. If the ball contacts a player during the oscillation, it flies toward the nearest wall.</div>
+      </div>
+      <div class="move-skill">
+        <div class="move-skill-label">Skill Required</div>
+        <div class="move-skill-text"><strong>Embrace the chaos.</strong> No precision needed — the direction is intentionally unpredictable. Best used to disrupt a stalemate or when you're behind and need a miracle.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="move-card">
+    <div class="move-icon" style="background: rgba(255,193,7,0.15);">&#8599;</div>
+    <div class="move-body">
+      <div class="move-header">
+        <span class="move-title">Diagonal Shot</span>
+        <span class="move-key-badge">H</span>
+        <span class="move-role-badge">MID / ATK</span>
+        <span class="difficulty">
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot"></span>
+          <span class="diff-dot"></span>
+        </span>
+      </div>
+      <p class="move-description">Shoots diagonally from the edge of the rod toward the opposite corner of the enemy goal. Only activates when the ball is at the top or bottom extremity of the rod.</p>
+      <div class="move-how">
+        <div class="move-how-label">How to Execute</div>
+        <div class="move-how-text">Select MID (E) or ATK (R) rod. Move the rod so the ball is at the very top or bottom of the rod's range. Press <strong>H</strong> (MID) or <strong>G</strong> (ATK). The ball fires diagonally toward the opposite goal corner.</div>
+      </div>
+      <div class="move-skill">
+        <div class="move-skill-label">Skill Required</div>
+        <div class="move-skill-text"><strong>Ball positioning.</strong> The ball MUST be at the extremity of the rod — the move fails otherwise. Position the ball at the top to shoot toward the bottom goal corner, or vice versa. Requires spatial awareness of the table.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTACKER MOVES -->
+  <h2 class="section-title">Attacker (ATK)</h2>
+
+  <div class="move-card">
+    <div class="move-icon" style="background: rgba(103,58,183,0.15);">&#9632;</div>
+    <div class="move-body">
+      <div class="move-header">
+        <span class="move-title">PP Square</span>
+        <span class="move-key-badge">F</span>
+        <span class="move-role-badge">ATK</span>
+        <span class="difficulty">
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot"></span>
+        </span>
+      </div>
+      <p class="move-description">Ball auto-dribbles between your attackers. Click at the perfect moment to fire a power shot at the goal.</p>
+      <div class="move-how">
+        <div class="move-how-label">How to Execute</div>
+        <div class="move-how-text">Select ATK rod (R). Ball near attackers. Press <strong>F</strong> to start the dribble. The ball bounces between your attackers automatically. <strong>Click</strong> during the dribble to shoot. "CLICK TO SHOOT!" appears on screen.</div>
+      </div>
+      <div class="move-skill">
+        <div class="move-skill-label">Skill Required</div>
+        <div class="move-skill-text"><strong>Timing.</strong> The shot quality depends on WHEN you click. Best timing window is around 1 second into the dribble (peaks at ~60 frames). Too early, too late, or after 3 seconds = weak/inaccurate shot. Auto-cancels after 3 seconds.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ALL RODS MOVES -->
+  <h2 class="section-title">All Rods (Universal)</h2>
+
+  <div class="move-card">
+    <div class="move-icon" style="background: linear-gradient(135deg, rgba(156,39,176,0.2), rgba(233,69,96,0.2));">&#127744;</div>
+    <div class="move-body">
+      <div class="move-header">
+        <span class="move-title">Spinneroni</span>
+        <span class="move-key-badge">V</span>
+        <span class="move-role-badge">ALL</span>
+        <span class="difficulty">
+          <span class="diff-dot filled hard"></span>
+          <span class="diff-dot filled hard"></span>
+          <span class="diff-dot filled hard"></span>
+          <span class="diff-dot filled hard"></span>
+          <span class="diff-dot filled hard"></span>
+        </span>
+      </div>
+      <p class="move-description">The ultimate spin shot. Applies maximum spin to the ball, causing it to curve dramatically via the Magnus effect. The hardest move in the game.</p>
+      <div class="move-how">
+        <div class="move-how-label">How to Execute</div>
+        <div class="move-how-text">
+          1. Ball must be near your selected rod.<br>
+          2. Press <strong>V</strong> to enter charge mode. A spin charge bar appears.<br>
+          3. <strong>Rapidly move mouse left/right</strong> to build spin charge. The faster and more you move, the more spin.<br>
+          4. <strong>Click</strong> to fire the shot with accumulated spin.<br>
+          5. Auto-fires after 2 seconds if you don't click.
+        </div>
+      </div>
+      <div class="move-skill">
+        <div class="move-skill-label">Skill Required</div>
+        <div class="move-skill-text"><strong>Maximum horizontal mouse speed + timing.</strong> You must generate rapid horizontal mouse movement during the 2-second charge window while NOT losing control of your rod position. The ball curves proportionally to spin charge. Full charge = dramatic curve that can bend around defenders. This is the highest skill-ceiling move in the game.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="move-card">
+    <div class="move-icon" style="background: rgba(158,158,158,0.15);">&#128064;</div>
+    <div class="move-body">
+      <div class="move-header">
+        <span class="move-title">Fake Shot</span>
+        <span class="move-key-badge">B</span>
+        <span class="move-role-badge">ALL</span>
+        <span class="difficulty">
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot"></span>
+          <span class="diff-dot"></span>
+          <span class="diff-dot"></span>
+          <span class="diff-dot"></span>
+        </span>
+      </div>
+      <p class="move-description">Your rod performs a kick animation, but intentionally misses the ball. The visual deception can trick your opponent into reacting prematurely.</p>
+      <div class="move-how">
+        <div class="move-how-label">How to Execute</div>
+        <div class="move-how-text">Any rod selected. Press <strong>B</strong>. The rod swings as if kicking, but the foot doesn't extend far enough to contact the ball. Works even without ball proximity.</div>
+      </div>
+      <div class="move-skill">
+        <div class="move-skill-label">Skill Required</div>
+        <div class="move-skill-text"><strong>Deception.</strong> No mechanical skill — it's a mind game. Use before a real shot to bait your opponent into moving their defender. Timing the fake before the real attack is key.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="move-card">
+    <div class="move-icon" style="background: rgba(255,87,34,0.15);">&#9889;</div>
+    <div class="move-body">
+      <div class="move-header">
+        <span class="move-title">Dribble Shot</span>
+        <span class="move-key-badge">B B</span>
+        <span class="move-role-badge">ALL</span>
+        <span class="difficulty">
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot filled"></span>
+          <span class="diff-dot"></span>
+          <span class="diff-dot"></span>
+        </span>
+      </div>
+      <p class="move-description">Double-tap B: first tap fakes, second fires a real max-power shot. A quick deception-into-attack combo.</p>
+      <div class="move-how">
+        <div class="move-how-label">How to Execute</div>
+        <div class="move-how-text">Any rod selected, ball nearby. Tap <strong>B</strong> once (fake kick plays), then tap <strong>B</strong> again within 500ms. The second tap triggers a real powerful kick. The rapid fake-to-real catches opponents off guard.</div>
+      </div>
+      <div class="move-skill">
+        <div class="move-skill-label">Skill Required</div>
+        <div class="move-skill-text"><strong>Fast double-tap timing.</strong> The two taps must be within 500ms. Too slow = two separate fake shots. The deceptive rhythm is the skill — your opponent sees the fake and relaxes, then the real shot arrives.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Reference Table -->
+  <h2 class="section-title">Quick Reference</h2>
+
+  <div class="controls-summary" style="overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+      <thead>
+        <tr style="border-bottom: 2px solid #0f3460;">
+          <th style="text-align: left; padding: 8px; color: #4fc3f7;">Move</th>
+          <th style="text-align: center; padding: 8px; color: #4fc3f7;">Key</th>
+          <th style="text-align: center; padding: 8px; color: #4fc3f7;">Rod</th>
+          <th style="text-align: center; padding: 8px; color: #4fc3f7;">Difficulty</th>
+          <th style="text-align: left; padding: 8px; color: #4fc3f7;">Core Skill</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 1px solid #0a1a33;"><td style="padding: 6px 8px;">Selfie Shot</td><td style="text-align:center;">F F</td><td style="text-align:center;">GK</td><td style="text-align:center;">&#9733;</td><td style="padding: 6px 8px;">Courage</td></tr>
+        <tr style="border-bottom: 1px solid #0a1a33;"><td style="padding: 6px 8px;">Spaghetti Shot</td><td style="text-align:center;">F</td><td style="text-align:center;">DEF</td><td style="text-align:center;">&#9733;&#9733;&#9733;</td><td style="padding: 6px 8px;">Ball centering</td></tr>
+        <tr style="border-bottom: 1px solid #0a1a33;"><td style="padding: 6px 8px;">Pepperoni</td><td style="text-align:center;">G</td><td style="text-align:center;">DEF</td><td style="text-align:center;">&#9733;</td><td style="padding: 6px 8px;">Luck</td></tr>
+        <tr style="border-bottom: 1px solid #0a1a33;"><td style="padding: 6px 8px;">Cornetto</td><td style="text-align:center;">H + Click</td><td style="text-align:center;">DEF</td><td style="text-align:center;">&#9733;&#9733;&#9733;&#9733;</td><td style="padding: 6px 8px;">Rod control + timing</td></tr>
+        <tr style="border-bottom: 1px solid #0a1a33;"><td style="padding: 6px 8px;">Yoyo Shot</td><td style="text-align:center;">J</td><td style="text-align:center;">DEF</td><td style="text-align:center;">&#9733;&#9733;</td><td style="padding: 6px 8px;">Positional awareness</td></tr>
+        <tr style="border-bottom: 1px solid #0a1a33;"><td style="padding: 6px 8px;">Dory Shot</td><td style="text-align:center;">F</td><td style="text-align:center;">MID</td><td style="text-align:center;">&#9733;&#9733;&#9733;&#9733;</td><td style="padding: 6px 8px;">Mouse stillness</td></tr>
+        <tr style="border-bottom: 1px solid #0a1a33;"><td style="padding: 6px 8px;">The Eliza</td><td style="text-align:center;">G</td><td style="text-align:center;">MID</td><td style="text-align:center;">&#9733;</td><td style="padding: 6px 8px;">Chaos</td></tr>
+        <tr style="border-bottom: 1px solid #0a1a33;"><td style="padding: 6px 8px;">Diagonal Shot</td><td style="text-align:center;">H / G</td><td style="text-align:center;">MID/ATK</td><td style="text-align:center;">&#9733;&#9733;&#9733;</td><td style="padding: 6px 8px;">Ball positioning</td></tr>
+        <tr style="border-bottom: 1px solid #0a1a33;"><td style="padding: 6px 8px;">PP Square</td><td style="text-align:center;">F + Click</td><td style="text-align:center;">ATK</td><td style="text-align:center;">&#9733;&#9733;&#9733;&#9733;</td><td style="padding: 6px 8px;">Click timing</td></tr>
+        <tr style="border-bottom: 1px solid #0a1a33;"><td style="padding: 6px 8px;">Spinneroni</td><td style="text-align:center;">V + Move + Click</td><td style="text-align:center;">ALL</td><td style="text-align:center;">&#9733;&#9733;&#9733;&#9733;&#9733;</td><td style="padding: 6px 8px;">Mouse speed + timing</td></tr>
+        <tr style="border-bottom: 1px solid #0a1a33;"><td style="padding: 6px 8px;">Fake Shot</td><td style="text-align:center;">B</td><td style="text-align:center;">ALL</td><td style="text-align:center;">&#9733;</td><td style="padding: 6px 8px;">Deception</td></tr>
+        <tr><td style="padding: 6px 8px;">Dribble Shot</td><td style="text-align:center;">B B</td><td style="text-align:center;">ALL</td><td style="text-align:center;">&#9733;&#9733;&#9733;</td><td style="padding: 6px 8px;">Double-tap speed</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    Foosball Online &mdash; Special Moves Guide<br>
+    Use the "Save as PDF" button above or press Ctrl+P to print/save this document.
+  </div>
+</body>
+</html>

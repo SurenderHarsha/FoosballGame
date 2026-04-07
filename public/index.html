@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foosball Online</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Lobby Screen -->
+  <div id="lobby">
+    <div class="lobby-box">
+      <h1>&#9917; Foosball Online</h1>
+      <p class="subtitle">Two-player table football in your browser</p>
+
+      <div class="mode-select">
+        <button class="mode-btn selected" data-mode="2p">2 Players</button>
+        <button class="mode-btn" data-mode="4p">4 Players</button>
+      </div>
+      <p id="modeDesc" class="mode-desc">Each player controls all 4 rods on their side.</p>
+
+      <div class="input-group">
+        <label for="roomInput">Room Code</label>
+        <input type="text" id="roomInput" placeholder="Enter a room name..." maxlength="20" autofocus>
+      </div>
+      <button id="joinBtn">Join Game</button>
+      <p class="hint">Share the same room code with your friend to play together!</p>
+    </div>
+  </div>
+
+  <!-- Waiting Screen -->
+  <div id="waiting" class="hidden">
+    <div class="lobby-box">
+      <h1>&#9917; Waiting...</h1>
+      <p>Room: <strong id="waitingRoom"></strong></p>
+      <p id="waitingCount">Waiting for players...</p>
+      <div class="spinner"></div>
+    </div>
+  </div>
+
+  <!-- Game Screen -->
+  <div id="gameScreen" class="hidden">
+    <div id="scoreboard">
+      <div class="score-side p1-score">
+        <span class="player-label">Blue</span>
+        <span id="scoreP1" class="score-num">0</span>
+      </div>
+      <div class="score-divider">-</div>
+      <div class="score-side p2-score">
+        <span id="scoreP2" class="score-num">0</span>
+        <span class="player-label">Red</span>
+      </div>
+      <div class="win-target">First to <span id="winTarget">10</span></div>
+    </div>
+
+    <div id="gameArea">
+      <div id="canvasColumn">
+        <canvas id="gameCanvas"></canvas>
+        <!-- Special moves panel (below canvas, horizontal) -->
+        <div id="movesPanel" class="moves-panel">
+          <div class="moves-title">SPECIAL MOVES</div>
+          <div id="movesList"></div>
+        </div>
+      </div>
+
+      <!-- Rod info panel (right of canvas) -->
+      <div id="rodInfoPanel" class="rod-info-panel">
+        <div class="moves-title">YOUR RODS</div>
+        <div id="rodInfoList"></div>
+      </div>
+    </div>
+
+    <div id="lockMessage" class="hidden">Click the table to lock your mouse</div>
+    <div id="controls-help">
+      <span><b>Mouse</b> Move rod</span>
+      <span><b>L/R Click</b> Kick / Back-kick</span>
+      <span><b>Q/W/E/R</b> Select rod</span>
+      <span><b>F/G/H/J</b> Special moves</span>
+      <span><b>V</b> Spinneroni</span>
+      <span><b>B</b> Fake / <b>BB</b> Dribble</span>
+      <span><b>T</b> Shake</span>
+    </div>
+    <div id="shakeStatus" class="hidden">
+      <span id="shakeText"></span>
+    </div>
+    <div id="overlay" class="hidden">
+      <div id="overlayText"></div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
