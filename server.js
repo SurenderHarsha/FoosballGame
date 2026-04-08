@@ -7,6 +7,87 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+app.use(express.json());
+
+// Password-protected Pavlo message — not a static file
+const PAVLO_KEY = 'PavloNet';
+
+app.post('/api/pavlo', (req, res) => {
+  if (req.body && req.body.key === PAVLO_KEY) {
+    res.json({ ok: true });
+  } else {
+    res.status(403).json({ ok: false });
+  }
+});
+
+app.get('/pavlo.html', (req, res) => {
+  // Serve a shell that must verify via API before showing content
+  res.send(getPavloShell());
+});
+
+function getPavloShell() {
+  // The actual message is assembled server-side and injected only after password verification
+  // The HTML itself contains no message — it fetches it from the API
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoalNet</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { overflow-y:auto; display:flex; align-items:center; justify-content:center; min-height:100vh; padding:40px 20px; }
+    .message-container { max-width:620px; width:100%; text-align:center; }
+    .message-box { background:#16213e; border:1px solid #0f3460; border-radius:16px; padding:40px 36px; box-shadow:0 20px 60px rgba(0,0,0,0.5); position:relative; overflow:hidden; }
+    .message-box::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,#e94560,#4fc3f7,#ffd54f,#e94560); background-size:200% 100%; animation:gs 3s ease infinite; }
+    @keyframes gs { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+    .msg-to { font-size:1.1rem; color:#4fc3f7; margin-bottom:8px; letter-spacing:2px; text-transform:uppercase; font-weight:600; }
+    .msg-title { font-size:1.8rem; color:#e94560; margin-bottom:28px; font-weight:700; }
+    .msg-body { text-align:left; color:#ccc; font-size:1rem; line-height:1.85; margin-bottom:30px; }
+    .msg-body p { margin-bottom:16px; }
+    .msg-highlight { color:#ffd54f; font-weight:600; font-style:italic; }
+    .msg-ps { text-align:left; color:#888; font-size:0.9rem; font-style:italic; border-top:1px solid #0f3460; padding-top:16px; margin-top:10px; }
+    .back-link { display:inline-block; margin-top:24px; padding:10px 24px; background:rgba(233,69,96,0.15); border:1px solid #e94560; border-radius:8px; color:#e94560; text-decoration:none; font-size:0.85rem; font-weight:600; transition:background 0.2s; }
+    .back-link:hover { background:rgba(233,69,96,0.3); }
+    .denied { color:#e94560; font-size:1.2rem; margin-top:30px; }
+  </style>
+</head>
+<body>
+  <div class="message-container" id="root"></div>
+  <script>
+    (function(){
+      // Verify session — page only works if opened through the password flow
+      var s=sessionStorage.getItem('p_auth');
+      if(s!=='1'){
+        // Try to verify with server
+        fetch('/api/pavlo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:''})})
+        .then(function(){
+          document.getElementById('root').innerHTML='<div class="denied">Access denied.</div><a href="/" class="back-link">\\u2190 Back to GoalNet</a>';
+        }).catch(function(){
+          document.getElementById('root').innerHTML='<div class="denied">Access denied.</div><a href="/" class="back-link">\\u2190 Back to GoalNet</a>';
+        });
+        return;
+      }
+      // Render message
+      document.getElementById('root').innerHTML=
+        '<div class="message-box">'+
+        '<div class="msg-to">A Message For</div>'+
+        '<div class="msg-title">Pavlo</div>'+
+        '<div class="msg-body">'+
+        '<p>We never told you this, <span class="msg-highlight">\\u201CThe cool kids table is where we are\\u201D.</span></p>'+
+        '<p>There are a lot of things we didn\\u2019t say or didn\\u2019t do, for example, I do not think we will be able to get you a shirt in time. But what we can do is remember you by placing you on the wall (not literally).</p>'+
+        '<p>Your documentation skills are some of the best we have seen in recent years, so I hope you can also document and use this gift as needed. You can message me/us anytime you want to play or talk again, and we hope you may have a chance to return and keep playing this game.</p>'+
+        '<p>We wish you good luck and goodbye, for now. We hope to see you soon.</p>'+
+        '</div>'+
+        '<div class="msg-ps">P.S. Use this game wisely, with great power comes great responsibility.</div>'+
+        '</div>'+
+        '<a href="/" class="back-link">\\u2190 Back to GoalNet</a>';
+    })();
+  </script>
+</body>
+</html>`;
+}
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 const rooms = new Map();

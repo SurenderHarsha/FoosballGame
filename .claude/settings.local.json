@@ -10,7 +10,8 @@
       "Bash(pkill -f \"node server.js\")",
       "mcp__Claude_Preview__preview_start",
       "Bash(cmd //c \"netstat -ano | findstr :3000\")",
-      "Bash(cmd //c \"taskkill /F /PID 29196\")"
+      "Bash(cmd //c \"taskkill /F /PID 29196\")",
+      "Bash(del \"D:\\\\FoosballGame\\\\public\\\\pavlo.html\")"
     ]
   }
 }

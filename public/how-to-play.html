@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoalNet — How to Play</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      overflow-y: auto;
+      display: block;
+      padding: 30px 20px;
+    }
+    .guide-container {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .guide-header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .guide-header h1 {
+      font-size: 2rem;
+      color: #e94560;
+      margin-bottom: 4px;
+    }
+    .guide-header p {
+      color: #666;
+      font-size: 0.9rem;
+    }
+    .back-btn {
+      display: inline-block;
+      padding: 8px 20px;
+      background: rgba(233,69,96,0.15);
+      border: 1px solid #e94560;
+      border-radius: 8px;
+      color: #e94560;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      transition: background 0.2s;
+    }
+    .back-btn:hover {
+      background: rgba(233,69,96,0.3);
+    }
+    .section {
+      background: #16213e;
+      border: 1px solid #0f3460;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .section h2 {
+      color: #4fc3f7;
+      font-size: 1.2rem;
+      margin-bottom: 14px;
+      border-bottom: 1px solid #0f3460;
+      padding-bottom: 8px;
+    }
+    .section h3 {
+      color: #e94560;
+      font-size: 1rem;
+      margin: 16px 0 8px;
+    }
+    .section p, .section li {
+      color: #bbb;
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+    .section ul, .section ol {
+      padding-left: 20px;
+      margin-bottom: 10px;
+    }
+    .section li {
+      margin-bottom: 6px;
+    }
+    .key {
+      display: inline-block;
+      background: #0f3460;
+      border: 1px solid #1a4a8a;
+      border-radius: 4px;
+      padding: 1px 7px;
+      font-family: monospace;
+      font-weight: 700;
+      color: #ffd54f;
+      font-size: 0.82rem;
+    }
+    .ctrl-grid {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 6px 14px;
+      margin: 10px 0;
+    }
+    .ctrl-grid .key { text-align: center; }
+    .ctrl-grid .ctrl-desc { color: #bbb; font-size: 0.85rem; display: flex; align-items: center; }
+    .tip-box {
+      background: rgba(255,213,79,0.08);
+      border-left: 3px solid #ffd54f;
+      padding: 10px 14px;
+      border-radius: 0 6px 6px 0;
+      margin: 12px 0;
+    }
+    .tip-box .tip-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #ffd54f;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    .tip-box p {
+      margin: 0;
+      font-size: 0.85rem;
+    }
+    .moves-link {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 24px;
+      background: #e94560;
+      border-radius: 8px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+    .moves-link:hover { background: #c73652; }
+    .footer-text {
+      text-align: center;
+      color: #444;
+      font-size: 0.75rem;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="guide-container">
+    <a href="/" class="back-btn">&larr; Back to GoalNet</a>
+
+    <div class="guide-header">
+      <h1>How to Play GoalNet</h1>
+      <p>Everything you need to know to start playing</p>
+    </div>
+
+    <!-- Getting Started -->
+    <div class="section">
+      <h2>1. Getting Started</h2>
+      <ol>
+        <li>Open the game in your browser.</li>
+        <li>Choose <strong>2 Players</strong> (1v1) or <strong>4 Players</strong> (2v2).</li>
+        <li>Type a <strong>Room Code</strong> — any word or name. Share this exact code with your friend(s).</li>
+        <li>Click <strong>Join Game</strong>. Wait for your opponent(s) to join the same room.</li>
+        <li>Once everyone is in, the game starts with a 3-second countdown.</li>
+        <li><strong>Click the table</strong> to lock your mouse. This is required to play.</li>
+      </ol>
+      <div class="tip-box">
+        <div class="tip-label">Tip</div>
+        <p>In 4-player mode, each team of 2 splits the rods: one player controls GK + DEF, the other controls MID + ATK.</p>
+      </div>
+    </div>
+
+    <!-- The Table -->
+    <div class="section">
+      <h2>2. The Table</h2>
+      <p>The table has 8 rods arranged in real foosball order, alternating between Blue and Red teams:</p>
+      <ol>
+        <li><strong>Blue GK</strong> (1 man) — Goalkeeper</li>
+        <li><strong>Blue DEF</strong> (2 men) — Defense</li>
+        <li><strong>Red ATK</strong> (3 men) — Attacker</li>
+        <li><strong>Blue MID</strong> (5 men) — Midfield</li>
+        <li><strong>Red MID</strong> (5 men) — Midfield</li>
+        <li><strong>Blue ATK</strong> (3 men) — Attacker</li>
+        <li><strong>Red DEF</strong> (2 men) — Defense</li>
+        <li><strong>Red GK</strong> (1 man) — Goalkeeper</li>
+      </ol>
+      <p>Blue scores by getting the ball into the right goal. Red scores by getting it into the left goal. First to <strong>10 goals</strong> wins.</p>
+    </div>
+
+    <!-- Controls -->
+    <div class="section">
+      <h2>3. Controls</h2>
+      <p>All controls use the mouse and keyboard. You must <strong>click the table first</strong> to lock your mouse (Pointer Lock). Press <span class="key">Esc</span> to unlock.</p>
+
+      <h3>Rod Selection</h3>
+      <p>You have 4 rods. Select which rod to move using QWER:</p>
+      <div class="ctrl-grid">
+        <span class="key">Q</span><span class="ctrl-desc">Goalkeeper (GK)</span>
+        <span class="key">W</span><span class="ctrl-desc">Defense (DEF)</span>
+        <span class="key">E</span><span class="ctrl-desc">Midfield (MID)</span>
+        <span class="key">R</span><span class="ctrl-desc">Attacker (ATK)</span>
+      </div>
+      <p>The selected rod is highlighted in <strong style="color:#ffd54f;">gold</strong> on the table.</p>
+
+      <div class="tip-box">
+        <div class="tip-label">Dual Rod Mode</div>
+        <p>Hold <strong>two keys at once</strong> (e.g. <span class="key">Q</span> + <span class="key">W</span>) to control two rods simultaneously. Both rods move together with the mouse. Advanced players use this to coordinate defense and attack.</p>
+      </div>
+
+      <h3>Moving a Rod</h3>
+      <div class="ctrl-grid">
+        <span class="key">Mouse Up/Down</span><span class="ctrl-desc">Slides the selected rod vertically</span>
+      </div>
+      <p>Move your mouse up or down while it's locked to slide the rod. The men on the rod move with it. DEF rods have extra slide range.</p>
+
+      <h3>Kicking</h3>
+      <div class="ctrl-grid">
+        <span class="key">Left Click</span><span class="ctrl-desc">Forward kick (toward enemy goal)</span>
+        <span class="key">Right Click</span><span class="ctrl-desc">Back kick (away from enemy goal)</span>
+      </div>
+      <p>When you click, the selected rod swings and hits the ball. The kick has two properties controlled by your mouse movement:</p>
+      <ul>
+        <li><strong>Power:</strong> Move your mouse faster before clicking = stronger kick. The power bar in the bottom-right corner shows your current power level (green = weak, red = strong).</li>
+        <li><strong>Angle:</strong> Flick your mouse left or right before clicking to aim the shot at an angle. The arrow indicator shows your current angle. No flick = straight shot.</li>
+      </ul>
+      <div class="tip-box">
+        <div class="tip-label">How to Shoot Hard</div>
+        <p>Move your mouse quickly in any direction, then immediately click. The faster the mouse was moving, the harder the shot. Practice quick flick-and-click combos.</p>
+      </div>
+
+      <h3>Ball Trapping (Pinning)</h3>
+      <p>When a slow ball approaches your rod, you can <strong>trap</strong> it by moving the rod gently. This requires skill:</p>
+      <ul>
+        <li><strong>Too still</strong> (not moving the mouse): Ball bounces off your player — no pin.</li>
+        <li><strong>Sweet spot</strong> (gentle, continuous movement): Ball sticks to your player. Keep subtle mouse movements going.</li>
+        <li><strong>Too fast</strong> (jerky movement): Ball deflects wildly.</li>
+      </ul>
+      <p>Trapping lets you set up a controlled shot instead of just deflecting.</p>
+
+      <h3>Other Controls</h3>
+      <div class="ctrl-grid">
+        <span class="key">T</span><span class="ctrl-desc">Request table shake (both teams must press T to shake a stuck ball)</span>
+        <span class="key">Esc</span><span class="ctrl-desc">Unlock mouse (pause your control)</span>
+      </div>
+    </div>
+
+    <!-- Special Moves -->
+    <div class="section">
+      <h2>4. Special Moves</h2>
+      <p>Each rod position has unique special moves. These activate only when the <strong>ball is touching the rod</strong>. The moves panel below the table shows which moves are available (highlighted gold when usable).</p>
+
+      <h3>How to Use Special Moves</h3>
+      <ol>
+        <li>Select the rod with <span class="key">Q</span> <span class="key">W</span> <span class="key">E</span> <span class="key">R</span></li>
+        <li>Make sure the ball is <strong>touching</strong> your rod's players</li>
+        <li>Press the move's key: <span class="key">F</span> <span class="key">G</span> <span class="key">H</span> <span class="key">J</span> for role-specific moves</li>
+        <li>Universal moves: <span class="key">V</span> for Spinneroni, <span class="key">B</span> for Fake Shot, <span class="key">B</span><span class="key">B</span> for Dribble Shot</li>
+      </ol>
+      <p>Hover over any move in the panel to see a detailed tooltip explaining controls and skill requirements.</p>
+
+      <div class="tip-box">
+        <div class="tip-label">Important</div>
+        <p>Special moves only activate when the ball is <strong>literally touching</strong> the rod. If the ball is even slightly away, the move won't fire. Position carefully.</p>
+      </div>
+
+      <p style="margin-top: 16px;">For the full list of every special move with detailed execution steps and difficulty ratings:</p>
+      <a href="/moves-guide.html" class="moves-link">View All Special Moves &rarr;</a>
+    </div>
+
+    <!-- Tips for Beginners -->
+    <div class="section">
+      <h2>5. Tips for Beginners</h2>
+      <ul>
+        <li><strong>Start with one rod.</strong> Don't try dual-rod mode until you're comfortable with single-rod control.</li>
+        <li><strong>Defense first.</strong> Select DEF (<span class="key">W</span>) and learn to block shots before trying to attack.</li>
+        <li><strong>Gentle mouse = better trapping.</strong> Practice the sweet spot. It's the foundation of ball control.</li>
+        <li><strong>Power comes from speed.</strong> A fast mouse flick right before clicking gives a powerful shot.</li>
+        <li><strong>Back kicks are useful.</strong> Right-click to kick backwards when you need to reset or pass between rods.</li>
+        <li><strong>Watch the power bar.</strong> Bottom-right of the table. Green = gentle, Red = full power.</li>
+        <li><strong>Fake shots</strong> (<span class="key">B</span>) cost nothing and can trick opponents. Use them often.</li>
+        <li><strong>Table shake</strong> (<span class="key">T</span>) requires both teams to agree. Use it when the ball is stuck.</li>
+      </ul>
+    </div>
+
+    <div class="footer-text">GoalNet &mdash; Made for Pavlo</div>
+  </div>
+</body>
+</html>
